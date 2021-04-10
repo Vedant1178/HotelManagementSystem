@@ -1,0 +1,131 @@
+﻿@model UserModel
+
+<link href="~/css/Login.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Create", "Account", FormMethod.Post))
+{
+    <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+        <div class="card card0 border-0">
+            <div class="row d-flex">
+                <div class="col-lg-6">
+                    <div class="card2 card border-0 px-4 py-5">
+                        <div class="row mb-4 px-3">
+                            <h6 class="mb-0 mr-4 mt-2">Personal Details</h6>
+                        </div>
+                        <div class="row px-3 mb-4">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">First Name</h6>
+                            </label>
+                            @Html.TextBoxFor(m => m.FirstName, new { id = "txtFirstName", @class = "mb-4", placeholder = "First Name", maxlength = "20" })
+                            @Html.ValidationMessageFor(m => m.FirstName, "", new { style = "color:red;margin-top:-20px;margin-bottom:20px;" })
+                        </div>
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Last Name</h6>
+                            </label>
+                            @Html.TextBoxFor(m => m.LastName, new { id = "txtLastName", @class = "mb-4", placeholder = "Last Name", maxlength = "20" })
+                            @Html.ValidationMessageFor(m => m.LastName, "", new { style = "color:red;margin-top:-20px;margin-bottom:20px;" })
+                        </div>
+                        <div class="row px-3">
+                            @*<label class="mb-1">*@
+                            <h6>Gender</h6><br /><br />
+                            @*</label>*@
+                            <label>@Html.RadioButtonFor(m => m.Gender, "Male", new { style = "width:20px;height:20px;margin-left:20px;vertical-align:middle;" })&nbsp;<span>Male</span></label>
+                            <label>@Html.RadioButtonFor(m => m.Gender, "Female", new { style = "width:20px;height:20px;margin-left:20px;vertical-align:middle;" }) &nbsp;Female</label>
+                            @Html.ValidationMessageFor(m => m.Gender, "", new { style = "color:red;margin-top:-20px;margin-bottom:20px;" })
+                        </div>
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Username</h6>
+                            </label>
+                            @Html.TextBoxFor(m => m.Username, new { id = "txtUsername", @class = "mb-4", placeholder = "Username", maxlength = "20" })
+                            @Html.ValidationMessageFor(m => m.Username, "", new { style = "color:red;margin-top:-20px;margin-bottom:20px;" })
+                        </div>
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Password</h6>
+                            </label>
+                            @Html.PasswordFor(m => m.Password, new { id = "txtPassword", @class = "mb-4", placeholder = "Password", maxlength = "20" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { style = "color:red;margin-top:-20px;margin-bottom:20px;" })
+                        </div>
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Email</h6>
+                            </label>
+                            @Html.TextBoxFor(m => m.Email, new { id = "txtEmail", @class = "mb-4", placeholder = "Email", maxlength = "50" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { style = "color:red;margin-top:-20px;margin-bottom:20px;" })
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card2 card border-0 px-4 py-5">
+                        <div class="row mb-4 px-3">
+                            <h6 class="mb-0 mr-4 mt-2">Contact / Address Details</h6>
+                        </div>
+                        <div class="row px-3 mb-4">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Mobile Number</h6>
+                            </label>
+                            @Html.TextBoxFor(m => m.MobileNumber, new { id = "txtMobile", @class = "mb-4", placeholder = "Mobile Number", maxlength = "10" })
+                            @Html.ValidationMessageFor(m => m.MobileNumber, "", new { style = "color:red;margin-top:-20px;margin-bottom:20px;" })
+                        </div>
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Address <small>(house no,building,area)</small></h6>
+                            </label>
+                            @Html.TextBoxFor(m => m.AddressLine, new { id = "txtAddressLine", @class = "mb-4", placeholder = "Address", maxlength = "100" })
+                            @Html.ValidationMessageFor(m => m.AddressLine, "", new { style = "color:red;margin-top:-20px;margin-bottom:20px;" })
+                        </div>
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">City</h6>
+                            </label>
+                            @Html.DropDownListFor(m => m.City, Model.States, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.City, "", new { style = "color:red;margin-top:0px;margin-bottom:20px;" })
+                        </div>
+                        <div class="row px-3" style="margin-top:20px;">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Pin Code</h6>
+                            </label>
+                            @Html.TextBoxFor(m => m.PinCode, new { id = "txtPassword", @class = "mb-4", placeholder = "Pin Code", maxlength = "6" })
+                            @Html.ValidationMessageFor(m => m.PinCode, "", new { style = "color:red;margin-top:-20px;margin-bottom:20px;" })
+                        </div>
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">State</h6>
+                            </label>
+                            @*@Html.TextBoxFor(m => m.State, new { id = "txtPassword", @class = "mb-4", placeholder = "State", maxlength = "50" })*@
+                            @Html.DropDownListFor(m => m.Country, Model.Countries, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Country, "", new { style = "color:red;margin-top:0px;margin-bottom:20px;" })
+                        </div>
+                        <div class="row mb-3 px-3 text-right">
+                            <button type="submit" class="btn btn-blue text-center" style="margin-top:25px;">Register</button>
+                            <button type="button" class="btn btn-blue text-center" style="margin-top:25px;margin-left:10px" onclick="CancelRegister()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-blue py-4">
+                <div class="row px-3">
+                    <small class="ml-4 ml-sm-5 mb-2">Copyright &copy; 2021. All rights reserved.</small>
+                    <div class="social-contact ml-4 ml-sm-auto"> <span class="fa fa-facebook mr-4 text-sm"></span> <span class="fa fa-google-plus mr-4 text-sm"></span> <span class="fa fa-linkedin mr-4 text-sm"></span> <span class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function CancelRegister() {
+        document.location = "/Account/Login"
+    }
+</script>

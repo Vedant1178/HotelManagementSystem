@@ -1,0 +1,190 @@
+﻿@model RoomReservationModel
+@*<link href="~/css/BookingForm.css" rel="stylesheet" />*@
+<link href="~/css/credit.css" rel="stylesheet" />
+<link href="~/assets/main.css" rel="stylesheet" />
+<link href="~/assets/responsive.css" rel="stylesheet" />
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.4-beta.33/jquery.inputmask.min.js"></script>
+<script src="~/assets/main.js"></script>
+<script src="~/assets/flipper.min.js"></script>
+
+
+@using (Html.BeginForm("Booking", "Rooms", FormMethod.Post))
+{
+    <!--  Details -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" style="margin-top:60px;">
+                <div class="form-group">
+                    <div class="row">
+                        <h3 class="heading" style="font-family:monospace;width:100%;background-color:#47b5ed !important;padding:10px">Hotel Booking Details</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-1-12 col-1-12-sm" style="font-family:monospace; margin-top:20px;">
+                            <div>
+                                @Html.HiddenFor(m => m.RoomId)
+                                @Html.HiddenFor(m => m.HotelId)
+                                @Html.HiddenFor(m => m.RoomDetails.PricePerNight, new { id = "hiddenPricePerDay" })
+                                @Html.HiddenFor(m => m.TotalBillAmount, new { id = "hiddenBillAmount" })
+                                <h5 class="heading">
+                                    <label class="textlabel">@Model.RoomDetails.HotelsModel.HotelName</label>
+                                    <br />
+                                    <label class="textlabel" style="float:left;margin-top:20px;">Price Per Night : $@Model.RoomDetails.PricePerNight | Beds : @Model.RoomDetails.Beds | Hotel Ratings : @Model.RoomDetails.Ratings </label>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="font-family:monospace; margin-top:20px;">
+                        <h5><label for="CheckIn" style="margin-right:10px;margin-left:-8px;"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Checkin Date</label></h5>
+                        @Html.TextBoxFor(m => m.CheckIn, new { type = "date", id = "dtCheckIn", @class = "form-control", name = "CheckIn", style = "margin-bottom:auto" })
+                        @Html.ValidationMessageFor(m => m.CheckIn, "", new { style = "color:red;margin-top:0px;margin-bottom:20px;" })
+                    </div>
+                    <div class="row" style="font-family:monospace; margin-top:20px;">
+                        <h5><label for="CheckOut" style="margin-right:10px;margin-left:-8px;"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Checkout Date</label></h5>
+                        @Html.TextBoxFor(m => m.CheckOut, new { type = "date", id = "dtCheckOut", @class = "form-control", name = "CheckOut", style = "margin-bottom:auto" })
+                        @Html.ValidationMessageFor(m => m.CheckOut, "", new { style = "color:red;margin-top:0px;margin-bottom:20px;" })
+                    </div>
+                    <div class="row" >
+                        <h3 class="heading" style="font-family:monospace;width:100%;background-color:#47b5ed !important;padding:10px;margin-top:20px;">Total Paybale Amount</h3>
+                        <div style="border: inset;
+                                border-width: 1px;
+                                margin-top: -9px;
+                                text-align: center;
+                                text-align: center;
+                                width: 100%;
+                                font-size: xxx-large;">
+                            $<label id="lblBookingAmount">0</label>
+                        </div>
+                    </div>
+                </div> <!-- /.form-group -->
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-10 m-auto">
+                    <div class="card willFlip" id="willFlip">
+                        <div class="front">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <img src="~/assets/card_bank.png" width="50" style="filter: contrast(0)" height="50" alt="">
+                                    <img src="~/assets/visa.png" width="50" height="50" alt="">
+                                </div>
+                                <div class="col-md-12 mt-1">
+                                    <div class="form-group">
+                                        <label for="cardNumber"></label>
+                                        <input type="text" class="form-control animate__animated animate__bounce animate__duration-2s" disabled readonly id="cardNumber">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between bd-highlight mb-3">
+                                    <div class="col-md-6 card-holder-content">
+                                        <div class="form-group">
+                                            <label for="cardHolderValue">Card Holder</label>
+                                            <input maxlength="50" type="text" placeholder="FULL NAME" disabled class="cardHolder form-control animate__animated animate__bounce animate__duration-2s" id="cardHolderValue">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 card-expires-content">
+                                        <div class="input-date">
+                                            <label for="expiredMonth" class="text-right d-block">Expires</label>
+                                            <div class="row content-date-input justify-content-end animate__animated animate__duration-2s animate__bounce">
+                                                <input type="text" disabled class="cardHolder col-4 form-control" id="expiredMonth">
+                                                <h4 class="mt-1 p-2 slash-text"> / </h4>
+                                                <input type="text" disabled class="cardHolder col-4 form-control" id="expiredYear">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <div class="card-bar"></div>
+                            <div class="card-body">
+                                <div class="col-md-12  back-middle">
+                                    <div class="form-group">
+                                        <label for="cardCcv" class="text-right d-block">CW</label>
+                                        <input type="password" disabled class="form-control" id="cardCcv">
+                                    </div>
+                                    <img src="~/assets/visa.png" class="float-right" width="50" height="50" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body mt-5">
+                        <div class="form-group">
+                            <label for="cardInput">Cards Number</label>
+                            @Html.TextBoxFor(m => m.CardNumber, new { @class = "input card-input_field form-control", id = "cardInput" })
+                            @Html.ValidationMessageFor(m => m.CardNumber, "", new { style = "color:red;margin-top:0px;margin-bottom:20px;" })
+                            @*<input required class="input card-input_field form-control" id="cardInput">*@
+                        </div>
+                        <div class="form-group">
+                            <label for="cardHolder">Cards Holders</label>
+                            @Html.TextBoxFor(m => m.CardHolderName, new { @class = "card-input_field form-control", id = "cardHolder", maxlength = "50" })
+                            @Html.ValidationMessageFor(m => m.CardHolderName, "", new { style = "color:red;margin-top:0px;margin-bottom:20px;" })
+                            @*<input required class="" id="cardHolder" maxlength="50">*@
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="monthInput">Expiration Date</label>
+                                    <select required name="" class="form-control card-input_field" id="monthInput">
+                                        <option class="disabled" readonly>Month</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="yearInput"></label>
+                                    <select required name="" class="form-control card-input_field mt-2" id="yearInput">
+                                        <option class="disabled" readonly>Year</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="cwInput">CW</label>
+                                    @Html.TextBoxFor(m => m.CardCVV, new { @class = "form-control card-input_field", id = "cwInput" })
+                                    @Html.ValidationMessageFor(m => m.CardCVV,"", new { style = "color:red;margin-top:0px;margin-bottom:20px;" })
+                                    @*<input required type="text" class="form-control card-input_field" id="cwInput">*@
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <input type="submit" disabled class="btn btn-primary d-block card-input_button w-100" value="Submit" />  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+
+    
+
+    (function ($) {
+
+      
+        function floatLabel(inputType) {
+            $(inputType).each(function () {
+                var $this = $(this);
+                // on focus add cladd active to label
+                $this.focus(function () {
+                    $this.next().addClass("active");
+                });
+                //on blur check field and remove class if needed
+                $this.blur(function () {
+                    if ($this.val() === '' || $this.val() === 'blank') {
+                        $this.next().removeClass();
+                    }
+                });
+            });
+        }
+        // just add a class of "floatLabel to the input field!"
+        floatLabel(".floatLabel");
+    })(jQuery);
+
+
+
+</script>
